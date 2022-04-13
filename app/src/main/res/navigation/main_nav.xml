@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -22,5 +25,24 @@
         <argument
             android:name="car"
             app:argType="com.valentine.networkingsample.model.GetAllCarResponseItem" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.valentine.networkingsample.fragment.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+
+        <action
+            android:id="@+id/action_registerFragment_to_viewRegisterFragment"
+            app:destination="@id/viewRegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewRegisterFragment"
+        android:name="com.valentine.networkingsample.fragment.ViewRegisterFragment"
+        android:label="fragment_view_register"
+        tools:layout="@layout/fragment_view_register" >
+        <argument
+            android:name="registerUser"
+            app:argType="com.valentine.networkingsample.request.RegisterRequest" />
     </fragment>
 </navigation>

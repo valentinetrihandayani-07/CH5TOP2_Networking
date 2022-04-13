@@ -5,12 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.valentine.networkingsample.databinding.FragmentHomeBinding
-
 import com.valentine.networkingsample.model.GetAllCarResponseItem
 import com.valentine.networkingsample.network.ApiClient
+import com.valentine.networkingsample.request.RegisterRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,6 +31,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fetchAllData()
+
+        binding.facButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRegisterFragment())
+        }
+    }
+
+    private fun fetchAllData() {
         ApiClient.instance.getAllCar().enqueue(object : Callback<List<GetAllCarResponseItem>> {
             override fun onResponse(
                 call: Call<List<GetAllCarResponseItem>>,
@@ -38,7 +47,7 @@ class HomeFragment : Fragment() {
                 val body = response.body()
                 val code = response.code()
 
-                if (code == 200){
+                if (code == 200) {
                     binding.loading.visibility = View.GONE
                     showData(body)
                 }
@@ -55,7 +64,8 @@ class HomeFragment : Fragment() {
         val adapter = CarAdapter()
         adapter.submitList(body)
         binding.rvCar.adapter = adapter
-        binding.rvCar.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rvCar.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
     }
 
     override fun onDestroyView() {
